@@ -31,9 +31,7 @@ DATASET_ID = os.getenv(
     "SMOL_DATASET", "HuggingFaceTB/smoltalk2_everyday_convs_think"
 )
 OUT_DIR = os.getenv("SMOL_OUT", "runs/smollm3-3b-sft-lora")
-HUB_REPO = os.getenv(
-    "SMOL_HUB_REPO", "VoicesColeby/smollm3-3b-sft-lora-smoltalk-everyday"
-)
+HUB_REPO = os.getenv("SMOL_HUB_REPO", "VoicesColeby/smollm3-3b-sft-lora")
 MAX_STEPS = int(os.getenv("SMOL_MAX_STEPS", "200"))
 MAX_LEN = int(os.getenv("SMOL_MAX_LEN", "1024"))
 
@@ -91,8 +89,13 @@ def main() -> int:
     )
 
     # --- SFT config
+    # NOTE: hub_model_id MUST be set for trainer.push_to_hub() to go to the
+    # intended repo. If left unset, push_to_hub() uses the output_dir basename
+    # under the current user — which is how the first run silently landed at
+    # VoicesColeby/smollm3-3b-sft-lora instead of HUB_REPO.
     args = SFTConfig(
         output_dir=OUT_DIR,
+        hub_model_id=HUB_REPO,
         per_device_train_batch_size=2,
         gradient_accumulation_steps=8,            # effective batch 16
         max_steps=MAX_STEPS,

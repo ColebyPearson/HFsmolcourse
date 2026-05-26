@@ -2,12 +2,12 @@
 
 ## Progress Tracker
 
-**Overall: 1/5 fully done (Unit 0). Unit 1 SFT+LoRA fine-tune launched in background.**
+**Overall: 2/5 fully done (Units 0, 1). HF-site quiz for Unit 1 still pending.**
 
 | Done | Unit | Topic | Hands-on? | Chapters |
 |:----:|------|-------|:---------:|---------:|
 | ✅ | 0 | Welcome / Onboarding | — | 1 |
-| 🟡 | 1 | Instruction Tuning (SFT+LoRA on SmolLM3-3B + smoltalk2 running; practice quiz drafted; HF-site quiz pending) | ✅ launched | 7 |
+| ✅ | 1 | Instruction Tuning — SFT+LoRA done; adapter at [VoicesColeby/smollm3-3b-sft-lora](https://huggingface.co/VoicesColeby/smollm3-3b-sft-lora) (train loss 1.04→0.71, ~55 min); practice quiz drafted; HF-site quiz pending | ✅ done | 7 |
 | ☐ | 2 | Preference Alignment (DPO + advanced techniques) | ✅ | 4 |
 | ☐ | 3 | Vision Language Models | ✅ | 4 |
 | ☐ | 4 | Model Evaluation | *coming soon upstream* | 1 (placeholder) |
