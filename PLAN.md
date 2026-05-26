@@ -2,15 +2,15 @@
 
 ## Progress Tracker
 
-**Overall: 2/5 fully done (Units 0, 1). Unit 2 DPO launched; Unit 3 VLM script + practice quiz ready and queued; Unit 4 placeholder tracked.**
+**Overall: 4/4 released units done (0, 1, 2, 3). Unit 4 = upstream placeholder. Practice quizzes drafted for 1, 2, 3 — HF-site quizzes pending (user-only).**
 
 | Done | Unit | Topic | Hands-on? | Chapters |
 |:----:|------|-------|:---------:|---------:|
 | ✅ | 0 | Welcome / Onboarding | — | 1 |
-| ✅ | 1 | Instruction Tuning — SFT+LoRA done; adapter at [VoicesColeby/smollm3-3b-sft-lora](https://huggingface.co/VoicesColeby/smollm3-3b-sft-lora) (train loss 1.04→0.71, ~55 min); practice quiz drafted; HF-site quiz pending | ✅ done | 7 |
-| 🟡 | 2 | Preference Alignment (DPO) — running on ultrafeedback_binarized → [VoicesColeby/smollm3-3b-dpo-lora](https://huggingface.co/VoicesColeby/smollm3-3b-dpo-lora); practice quiz drafted | ✅ launched | 4 |
-| 🟡 | 3 | Vision Language Models — SmolVLM2-2.2B + ChartQA script ready and queued; practice quiz drafted | ✅ queued | 4 |
-| ⏸ | 4 | Model Evaluation — *upstream is "Coming soon!"; tracked, will revisit on update* | n/a | 1 placeholder |
+| ✅ | 1 | Instruction Tuning — [VoicesColeby/smollm3-3b-sft-lora](https://huggingface.co/VoicesColeby/smollm3-3b-sft-lora) (loss 1.04→0.71, 55 min); practice quiz | ✅ done | 7 |
+| ✅ | 2 | Preference Alignment (DPO) — [VoicesColeby/smollm3-3b-dpo-lora](https://huggingface.co/VoicesColeby/smollm3-3b-dpo-lora) (rewards/margins +0.005–0.013, 58 min); practice quiz | ✅ done | 4 |
+| ✅ | 3 | Vision Language Models — [VoicesColeby/smolvlm2-2.2b-sft-lora-chartqa](https://huggingface.co/VoicesColeby/smolvlm2-2.2b-sft-lora-chartqa) (loss 0.51→0.33, token-acc ~0.94, 21 min); practice quiz | ✅ done | 4 |
+| ⏸ | 4 | Model Evaluation — *upstream is "Coming soon!"; tracked, will revisit when chapter lands* | n/a | 1 placeholder |
 
 **Certs**
 - **Fundamentals** = complete Unit 1.
