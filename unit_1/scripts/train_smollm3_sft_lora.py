@@ -34,8 +34,8 @@ OUT_DIR = os.getenv("SMOL_OUT", "runs/smollm3-3b-sft-lora")
 HUB_REPO = os.getenv(
     "SMOL_HUB_REPO", "VoicesColeby/smollm3-3b-sft-lora-smoltalk-everyday"
 )
-MAX_STEPS = int(os.getenv("SMOL_MAX_STEPS", "1000"))
-MAX_LEN = int(os.getenv("SMOL_MAX_LEN", "2048"))
+MAX_STEPS = int(os.getenv("SMOL_MAX_STEPS", "200"))
+MAX_LEN = int(os.getenv("SMOL_MAX_LEN", "1024"))
 
 
 def main() -> int:
@@ -78,12 +78,16 @@ def main() -> int:
     print(f"[data] rows={len(ds)}  columns={ds.column_names}", flush=True)
 
     # --- LoRA
+    # PEFT 0.18+ no longer auto-infers target_modules for unmapped architectures —
+    # specify the canonical Llama/SmolLM3 attention + MLP linears explicitly.
     lora = LoraConfig(
         r=16,
         lora_alpha=32,
         lora_dropout=0.05,
         bias="none",
         task_type="CAUSAL_LM",
+        target_modules=["q_proj", "k_proj", "v_proj", "o_proj",
+                        "gate_proj", "up_proj", "down_proj"],
     )
 
     # --- SFT config
@@ -97,8 +101,8 @@ def main() -> int:
         lr_scheduler_type="cosine",
         max_length=MAX_LEN,
         bf16=True,
-        logging_steps=25,
-        save_steps=500,
+        logging_steps=10,
+        save_steps=100,
         save_total_limit=2,
         optim="paged_adamw_8bit",
         report_to="none",
