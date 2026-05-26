@@ -112,8 +112,11 @@ def main() -> int:
         lr_scheduler_type="cosine",
         warmup_steps=50,
         beta=BETA,
-        max_prompt_length=MAX_PROMPT_LEN,
         max_length=MAX_LEN,
+        # (TRL 1.5's DPOConfig dropped `max_prompt_length`; the combined
+        # `max_length` is the only sequence cap. The trainer handles
+        # implicit-prompt datasets like ultrafeedback_binarized — common
+        # prefix between chosen/rejected is auto-extracted as the prompt.)
         bf16=True,
         logging_steps=10,
         save_steps=100,

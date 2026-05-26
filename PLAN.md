@@ -2,15 +2,15 @@
 
 ## Progress Tracker
 
-**Overall: 2/5 fully done (Units 0, 1). HF-site quiz for Unit 1 still pending.**
+**Overall: 2/5 fully done (Units 0, 1). Unit 2 DPO launched; Unit 3 VLM script + practice quiz ready and queued; Unit 4 placeholder tracked.**
 
 | Done | Unit | Topic | Hands-on? | Chapters |
 |:----:|------|-------|:---------:|---------:|
 | ✅ | 0 | Welcome / Onboarding | — | 1 |
 | ✅ | 1 | Instruction Tuning — SFT+LoRA done; adapter at [VoicesColeby/smollm3-3b-sft-lora](https://huggingface.co/VoicesColeby/smollm3-3b-sft-lora) (train loss 1.04→0.71, ~55 min); practice quiz drafted; HF-site quiz pending | ✅ done | 7 |
-| ☐ | 2 | Preference Alignment (DPO + advanced techniques) | ✅ | 4 |
-| ☐ | 3 | Vision Language Models | ✅ | 4 |
-| ☐ | 4 | Model Evaluation | *coming soon upstream* | 1 (placeholder) |
+| 🟡 | 2 | Preference Alignment (DPO) — running on ultrafeedback_binarized → [VoicesColeby/smollm3-3b-dpo-lora](https://huggingface.co/VoicesColeby/smollm3-3b-dpo-lora); practice quiz drafted | ✅ launched | 4 |
+| 🟡 | 3 | Vision Language Models — SmolVLM2-2.2B + ChartQA script ready and queued; practice quiz drafted | ✅ queued | 4 |
+| ⏸ | 4 | Model Evaluation — *upstream is "Coming soon!"; tracked, will revisit on update* | n/a | 1 placeholder |
 
 **Certs**
 - **Fundamentals** = complete Unit 1.
