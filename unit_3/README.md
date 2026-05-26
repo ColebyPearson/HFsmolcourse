@@ -13,10 +13,26 @@ NotebookLM source: [`notebooklm/unit_3.txt`](../notebooklm/unit_3.txt)
 ## Status
 
 - [x] Read all chapters (or listen via NotebookLM)
-- [x] **VLM SFT script ready** — [`scripts/train_smolvlm_sft_lora.py`](scripts/train_smolvlm_sft_lora.py). Will publish to **[VoicesColeby/smolvlm2-2.2b-sft-lora-chartqa](https://huggingface.co/VoicesColeby/smolvlm2-2.2b-sft-lora-chartqa)** when run.
+- [x] **VLM SFT done.** Adapter pushed: **[VoicesColeby/smolvlm2-2.2b-sft-lora-chartqa](https://huggingface.co/VoicesColeby/smolvlm2-2.2b-sft-lora-chartqa)** (`pipeline_tag: image-text-to-text`, tagged `sft`, `trl`, `generated_from_trainer`). Wall-clock **21:15**, 150 steps; running train loss **0.51 → 0.33**; **mean-token-accuracy ~0.94** by end (chart-VQA answers are short — `"3"`, `"60%"` — so high token accuracy is the expected good signal).
 - [x] Practice quiz drafted — [`practice_quiz.md`](practice_quiz.md)
-- [ ] Train (queued — launches when Unit 2 DPO finishes and the GPU is free)
 - [ ] Quiz on the HF site — `https://huggingface.co/spaces/smol-course/unit_4_quiz` (course numbering)
+
+## What the chapter's example needs to update (upstream candidate)
+
+`units/en/unit3/4.md`'s `format_data()` writes messages in **typed-parts** form:
+
+```python
+{"role": "user", "content": [{"type": "image", ...}, {"type": "text", ...}]}
+```
+
+Current TRL's SFT collator (`trl.data_utils.prepare_multimodal_messages`)
+counts `<image>` tokens in **string** content and ignores typed-parts — running
+the chapter's recipe verbatim raises
+`ValueError: Number of images provided (1) does not match number of image placeholders (0)`.
+The working format (what this script uses) is plain-string content with no
+explicit `<image>`; TRL injects the placeholder itself. Two upstream
+candidates here: a docs PR on `huggingface/smol-course` and possibly a TRL
+improvement to accept typed-parts.
 
 ## The VLM fine-tune — `scripts/train_smolvlm_sft_lora.py`
 
@@ -27,8 +43,9 @@ NotebookLM source: [`notebooklm/unit_3.txt`](../notebooklm/unit_3.txt)
 | Method | TRL `SFTTrainer` + PEFT LoRA, bf16 (no 4-bit — smaller model + vision tower is finicky with bnb) |
 | LoRA | `r=8, α=16, dropout=0.05, target_modules=["q_proj", "v_proj"]` (per the chapter recipe — narrower than the LLM Unit 1 set) |
 | Hyperparams | lr=1e-4 cosine, warmup=20, batch=1 × grad-accum=4 (effective 4), `max_steps=150`, **`max_length=None`** (critical: otherwise image tokens get truncated) |
-| Data shape | `{"images": [PIL.Image], "messages": [{role, content:[{type:image|text, …}, …]}, …]}` with a system message defining the chart-analyst role |
+| Data shape | `{"images": [PIL.Image], "messages": [{role, content: "plain text"}, ...]}` — plain-string content; TRL's collator auto-injects the `<image>` placeholder (don't add your own typed-parts or explicit placeholder) |
 | Hardware | RTX 5060 Ti, 16 GB |
+| Wall-clock | **21:15** (1,275 s) |
 
 ### The four VLM-specific things to remember
 
