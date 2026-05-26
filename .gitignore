@@ -1,0 +1,33 @@
+# Upstream source clone (used to build notebooklm/ — not part of this repo)
+_source/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Training / build artifacts and logs
+runs/
+output/
+outputs/
+checkpoints/
+wandb/
+*.log
+
+# Env / secrets
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Claude Code agent-discovery dir — junction to unit_*/<skill-name>/
+# (skill source-of-truth lives under unit_*/; this dir is set up locally per
+# the unit_N/README instructions, mirroring the HFcontextcourse pattern)
+.claude/
