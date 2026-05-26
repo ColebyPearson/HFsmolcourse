@@ -13,7 +13,7 @@ NotebookLM source: [`notebooklm/unit_2.txt`](../notebooklm/unit_2.txt)
 ## Status
 
 - [x] Read all chapters (or listen via NotebookLM)
-- [x] **Hands-on DPO fine-tune — launched** ([`scripts/train_smollm3_dpo_lora.py`](scripts/train_smollm3_dpo_lora.py)). Adapter will publish to **[VoicesColeby/smollm3-3b-dpo-lora](https://huggingface.co/VoicesColeby/smollm3-3b-dpo-lora)** on completion.
+- [x] **Hands-on DPO fine-tune done.** Adapter pushed: **[VoicesColeby/smollm3-3b-dpo-lora](https://huggingface.co/VoicesColeby/smollm3-3b-dpo-lora)** (`pipeline_tag: text-generation`, tagged `dpo`, `trl`, `generated_from_trainer`). Wall-clock **58:27**, 200 steps; train loss flat at ~0.692 (~`-ln(0.5)`) as expected for short DPO; **rewards/margins positive (+0.005 to +0.013)** and **rewards/accuracies ~0.55–0.65** — the actual preference-alignment signal.
 - [x] Practice quiz drafted — [`practice_quiz.md`](practice_quiz.md)
 - [ ] Quiz on the HF site — `https://huggingface.co/spaces/smol-course/unit_3_quiz` (course numbering)
 
@@ -25,9 +25,17 @@ NotebookLM source: [`notebooklm/unit_2.txt`](../notebooklm/unit_2.txt)
 | Preference dataset | `trl-lib/ultrafeedback_binarized` (canonical TRL preference format) |
 | Method | TRL `DPOTrainer` + PEFT LoRA + 4-bit NF4 quant |
 | Reference policy | Reused base weights via the LoRA-disabling trick — no separate `ref_model` |
-| Hyperparams | `beta=0.1`, lr=5e-7 cosine, warmup=50, batch=1 × grad-accum=8 (effective 8 — DPO sees chosen+rejected per step), `max_steps=200`, `max_prompt_length=512`, `max_length=1024`, bf16, gradient checkpointing |
+| Hyperparams | `beta=0.1`, lr=5e-7 cosine, warmup=50, batch=1 × grad-accum=8 (effective 8 — DPO sees chosen+rejected per step), `max_steps=200`, `max_length=1024`, bf16, gradient checkpointing |
 | Hardware | RTX 5060 Ti, 16 GB |
+| Wall-clock | **58:27** (3,507 s) |
 | Hub model id | Set via `DPOConfig(hub_model_id=…)` (lesson learned from Unit 1) |
+
+### TRL 1.5 API change worth flagging upstream
+
+`DPOConfig.max_prompt_length` was **removed** in TRL 1.5 — only the combined
+`max_length` controls sequence cap now. The course's Unit 2 chapter still
+shows it in its example. Worth a docs PR on `huggingface/smol-course` (one
+parameter to remove from `unit2/2.md`).
 
 ### Deviation from the course recipe
 
