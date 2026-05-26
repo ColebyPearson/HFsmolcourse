@@ -55,18 +55,22 @@ SYSTEM_MESSAGE = (
 
 
 def format_example(sample):
-    """Map ChartQA's {image, query, label} into TRL's VLM SFT format."""
+    """Map ChartQA's {image, query, label} into TRL's VLM SFT format.
+
+    TRL's SFT collator (`prepare_multimodal_messages`) expects `content` to be
+    a *string* containing `<image>` placeholders that match the number of
+    entries in `images`. The chapter's typed-parts format
+    (`content: [{"type":"image",...},{"type":"text",...}]`) predates that
+    collator and isn't compatible with current TRL — it raises
+    `ValueError: Number of images provided (1) does not match number of image
+    placeholders (0)`.
+    """
     return {
         "images": [sample["image"]],
         "messages": [
-            {"role": "system",
-             "content": [{"type": "text", "text": SYSTEM_MESSAGE}]},
-            {"role": "user", "content": [
-                {"type": "image", "image": sample["image"]},
-                {"type": "text", "text": sample["query"]},
-            ]},
-            {"role": "assistant",
-             "content": [{"type": "text", "text": sample["label"][0]}]},
+            {"role": "system", "content": SYSTEM_MESSAGE},
+            {"role": "user", "content": sample["query"]},  # TRL collator auto-inserts <image> placeholders
+            {"role": "assistant", "content": sample["label"][0]},
         ],
     }
 
