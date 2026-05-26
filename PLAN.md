@@ -2,12 +2,12 @@
 
 ## Progress Tracker
 
-**Overall: 0/5 units complete.**
+**Overall: 1/5 fully done (Unit 0). Unit 1 SFT+LoRA fine-tune launched in background.**
 
 | Done | Unit | Topic | Hands-on? | Chapters |
 |:----:|------|-------|:---------:|---------:|
-| ☐ | 0 | Welcome / Onboarding | — | 1 |
-| ☐ | 1 | Instruction Tuning (SFT, chat templates, LoRA/PEFT, HF Jobs) | ✅ | 7 |
+| ✅ | 0 | Welcome / Onboarding | — | 1 |
+| 🟡 | 1 | Instruction Tuning (SFT+LoRA on SmolLM3-3B + smoltalk2 running; practice quiz drafted; HF-site quiz pending) | ✅ launched | 7 |
 | ☐ | 2 | Preference Alignment (DPO + advanced techniques) | ✅ | 4 |
 | ☐ | 3 | Vision Language Models | ✅ | 4 |
 | ☐ | 4 | Model Evaluation | *coming soon upstream* | 1 (placeholder) |
